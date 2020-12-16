@@ -1,0 +1,33 @@
+{
+  "name": "shinobi-tensorflow-python",
+  "author": "Shinob Systems, Moinul Alam | dermodmaster, Levent Koch |  Samuel Buffet",
+  "version": "1.0.0",
+  "description": "Object Detection plugin based on tensorflow Lite",
+  "main": "shinobi-tensorflow-python.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.16.2",
+    "moment": "^2.19.2",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^1.7.4"
+  },
+  "devDependencies": {},
+  "bin": "shinobi-tensorflow-python.js",
+  "scripts": {
+    "package": "pkg package.json -t linux,macos,win --out-path dist",
+    "package-x64": "pkg package.json -t linux-x64,macos-x64,win-x64 --out-path dist/x64",
+    "package-x86": "pkg package.json -t linux-x86,macos-x86,win-x86 --out-path dist/x86",
+    "package-armv6": "pkg package.json -t linux-armv6,macos-armv6,win-armv6 --out-path dist/armv6",
+    "package-armv7": "pkg package.json -t linux-armv7,macos-armv7,win-armv7 --out-path dist/armv7",
+    "package-all": "npm run package && npm run package-x64 && npm run package-x86 && npm run package-armv6 && npm run package-armv7"
+  },
+  "pkg": {
+    "targets": [
+      "node12"
+    ],
+    "scripts": [
+      "../pluginBase.js"
+    ],
+    "assets": []
+  }
+}
