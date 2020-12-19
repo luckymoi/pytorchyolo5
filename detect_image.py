@@ -67,7 +67,7 @@ def main():
 #            now = datetime.now()
 #            fn = rep + now.strftime("%H:%M:%S")
 #            print(fn)
-            
+#            
 #            image.save(fn, "JPEG")
             
 #            scale = detect.set_input(interpreter, image.size,
