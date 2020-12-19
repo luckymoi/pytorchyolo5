@@ -41,10 +41,12 @@ def main():
             rawImage = BytesIO(base64.b64decode(line))
             image = Image.open(rawImage)
             rep = os.path.abspath(__file__)
-            print(rep)
+            
             now = datetime.now()
-  
-            image.save(rep + now.strftime("%H:%M:%S"), "JPEG")
+            fn = rep + now.strftime("%H:%M:%S")
+            print(fn)
+            
+            image.save(fn, "JPEG")
             
 #            scale = detect.set_input(interpreter, image.size,
 #                                     lambda size: image.resize(size, Image.ANTIALIAS))
