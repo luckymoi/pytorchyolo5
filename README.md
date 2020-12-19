@@ -1,4 +1,4 @@
-# shinobi-pytorch.js
+# shinobi-pytorchyolo5.js
 
 **Ubuntu and CentOS only**
 
@@ -13,12 +13,6 @@ https://pytorch.org/get-started/locally/
 
 Make sure that you are downloading the correct file for your system architecture and python version.
 
-Install other python dependencies
-```
-pip install pillow
-pip install numpy
-```
-
 Copy the config file.
 
 ```
@@ -28,7 +22,7 @@ sh INSTALL.sh
 Start the plugin.
 
 ```
-pm2 start shinobi-pytorch.js
+pm2 start shinobi-pytorchyolo5.js
 ```
 
 Doing this will reveal options in the monitor configuration. Shinobi does not need to be restarted when a plugin is initiated or stopped.
@@ -50,7 +44,7 @@ Here is a sample of a Host configuration for the plugin.
 
 ```
 {
-  "plug":"Pytorch",
+  "plug":"Pytorchyolo5",
   "hostPort":8082,
   "key":"Pytorch23123",
   "mode":"host",
@@ -69,7 +63,7 @@ Add the `plugins` array if you don't already have it. Add the following *object 
 ```
   "plugins":[
       {
-          "id" : "Pytorch",
+          "id" : "Pytorchyolo5",
           "https" : false,
           "host" : "localhost",
           "port" : 8082,
