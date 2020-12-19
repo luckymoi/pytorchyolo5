@@ -5,7 +5,7 @@
 Go to the Shinobi directory. **/home/Shinobi** is the default directory.
 
 ```
-cd /home/Shinobi/plugins/pytorch
+cd /home/Shinobi/plugins/pytorchyolo5
 ```
 
 Install pytorch first:
