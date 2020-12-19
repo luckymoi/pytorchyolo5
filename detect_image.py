@@ -34,7 +34,7 @@ def main():
 #    interpreter = make_interpreter("models/ssd_mobilenet_v2_coco_quant_postprocess_edgetpu.tflite")
 #    interpreter.allocate_tensors()
     threshold = 0.4
-    printInfo("ready")
+
     while True:
         line = sys.stdin.readline().rstrip("\n")
         try:

@@ -1,0 +1,9 @@
+{
+   "plug": "Pytorch",
+   "host": "localhost",
+   "port": 8080,
+   "hostPort": 8082,
+   "key": "6ce94b0a662efd3115c51313412af53b00cdcf266ba90a5337ce6c79f26b",
+   "mode": "client",
+   "type": "detector"
+}
