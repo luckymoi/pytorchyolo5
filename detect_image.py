@@ -26,61 +26,11 @@ import json
 import detect
 #import tflite_runtime.interpreter as tflite
 import platform
+from datetime import datetime
 
-
-def load_labels(path, encoding='utf-8'):
-    """Loads labels from file (with or without index numbers).
-
-    Args:
-      path: path to label file.
-      encoding: label file encoding.
-    Returns:
-      Dictionary mapping indices to labels.
-    """
-    with open(path, 'r', encoding=encoding) as f:
-        lines = f.readlines()
-        if not lines:
-            return {}
-
-        if lines[0].split(' ', maxsplit=1)[0].isdigit():
-            pairs = [line.split(' ', maxsplit=1) for line in lines]
-            return {int(index): label.strip() for index, label in pairs}
-        else:
-            return {index: line.strip() for index, line in enumerate(lines)}
-
-
-#def make_interpreter(model_file):
-#    model_file, *device = model_file.split('@')
-#    return tflite.Interpreter(
-#        model_path=model_file,
-#        experimental_delegates=[
-#            tflite.load_delegate(EDGETPU_SHARED_LIB,
-#                                 {'device': device[0]} if device else {})
-#        ])
-
-
-def draw_objects(draw, objs, labels):
-    """Draws the bounding box and label for each object."""
-    for obj in objs:
-        bbox = obj.bbox
-        draw.rectangle([(bbox.xmin, bbox.ymin), (bbox.xmax, bbox.ymax)],
-                       outline='red')
-        draw.text((bbox.xmin + 10, bbox.ymin + 10),
-                  '%s\n%.2f' % (labels.get(obj.id, obj.id), obj.score),
-                  fill='red')
-
-
-def printInfo(text):
-    print(json.dumps({"type": "info", "data": text}))
-
-def printError(text):
-    print(json.dumps({"type": "error", "data": text}))
-
-def printData(array, time):
-    print(json.dumps({"type": "data", "data": array, "time": time}))
 
 def main():
-    labels = load_labels("models/coco_labels.txt")
+#    labels = load_labels("models/coco_labels.txt")
 #    interpreter = make_interpreter("models/ssd_mobilenet_v2_coco_quant_postprocess_edgetpu.tflite")
 #    interpreter.allocate_tensors()
     threshold = 0.4
@@ -90,6 +40,12 @@ def main():
         try:
             rawImage = BytesIO(base64.b64decode(line))
             image = Image.open(rawImage)
+            rep = os.path.abspath(__file__)
+            print(rep)
+            now = datetime.now()
+  
+            image.save(rep + now.strftime("%H:%M:%S"), "JPEG")
+            
 #            scale = detect.set_input(interpreter, image.size,
 #                                     lambda size: image.resize(size, Image.ANTIALIAS))
 
