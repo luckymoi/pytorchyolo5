@@ -62,7 +62,7 @@ def printData(array, time):
     print(json.dumps({"type": "data", "data": array, "time": time}))
 
 
-def detect():
+def detect(model, names, colors):
     threshold = 0.4
     printInfo("ready")
        
@@ -70,7 +70,8 @@ def detect():
         line = sys.stdin.readline().rstrip("\n")
         try:
             rawImage = BytesIO(base64.b64decode(line))
-            image = Image.open(rawImage)
+#            image = Image.open(rawImage)
+            dataset = Image.open(rawImage)
 #            rep = os.path.abspath(__file__)
 #            
 #            now = datetime.now()
@@ -84,6 +85,10 @@ def detect():
 
             start = time.perf_counter()
 #            interpreter.invoke()
+
+#            img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
+#            _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
+            
             inference_time = time.perf_counter() - start
 #            objs = detect.get_output(interpreter, threshold, scale)
             objs = []
@@ -102,34 +107,10 @@ def detect():
             printData(output, (inference_time * 1000))
         except Exception as e:
             printError(str(e))
-            
 
-  
-#    
 
-    
-#    
-#    imgsz = check_img_size(imgsz, s=model.stride.max())  # check img_size
-#    if half:
-#        model.half()  # to FP16
 
-#    # Second-stage classifier
-#    classify = False
-#    if classify:
-#        modelc = load_classifier(name='resnet101', n=2)  # initialize
-#        modelc.load_state_dict(torch.load('weights/resnet101.pt', map_location=device)['model']).to(device).eval()
 
-#    # Set Dataloader
-#    vid_path, vid_writer = None, None
-#    
-#    dataset = LoadImages(source, img_size=imgsz)
-
-#    # Get names and colors
-#    names = model.module.names if hasattr(model, 'module') else model.names
-#    colors = [[random.randint(0, 255) for _ in range(3)] for _ in names]
-
-#    # Run inference
-#    t0 = time.time()
 #    img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
 #    _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
 #    for path, img, im0s, vid_cap in dataset:
@@ -235,4 +216,10 @@ if __name__ == '__main__':
     
         # Load model
         model = attempt_load(weights, map_location=device)  # load FP32 model
-        detect()
+        
+        # Get names and colors
+        names = model.module.names if hasattr(model, 'module') else model.names
+        colors = [[random.randint(0, 255) for _ in range(3)] for _ in names]
+        
+        
+        detect(model, names, colors)
