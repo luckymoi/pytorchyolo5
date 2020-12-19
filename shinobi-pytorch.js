@@ -74,19 +74,17 @@ function respawn() {
  
  
 // Base Init />>
-//console.log("respawn")
 child = respawn();
  
 const emptyDataObject = { data: [], type: undefined, time: 0 };
  
 async function process(buffer, type) {
-    //console.log(ready)
     const startTime = new Date();
     if (!ready) {
         return emptyDataObject;
     }
     ready = false;
-    //console.log("process2")
+
     child.stdin.write(buffer.toString('base64') + '\n');
  
     var message = null;
@@ -115,7 +113,7 @@ async function process(buffer, type) {
 s.detectObject = function (buffer, d, tx, frameLocation, callback) {
     process(buffer).then((resp) => {
         var results = resp.data
-        //console.log(resp.time)
+//        console.log(resp.time)
         if (Array.isArray(results) && results[0]) {
             var mats = []
             results.forEach(function (v) {

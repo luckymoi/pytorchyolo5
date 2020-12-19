@@ -12,6 +12,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# based on work https://towardsdatascience.com/object-detection-and-tracking-in-pytorch-b3cf1a696a98
+
+
+
+
+
+# import python3-numba python3-skimage python3-sklearn python3-netfilter
+
 """Example using Pytorch to detect objects in a given image."""
 
 import argparse
@@ -30,6 +39,8 @@ import platform
 from datetime import datetime
 
 
+
+                
 def printInfo(text):
     print(json.dumps({"type": "info", "data": text}))
 
@@ -38,6 +49,7 @@ def printError(text):
 
 def printData(array, time):
     print(json.dumps({"type": "data", "data": array, "time": time}))
+
 
 def main():
 #    labels = load_labels("models/coco_labels.txt")
@@ -73,6 +85,11 @@ def main():
                 score = obj[1]
                 bbox = obj[2]
                 output.append({"bbox": bbox, "class": label, "score": score})
+                
+
+            output.append({"bbox": [10,20,100,150], "class": "ours", "score": 80})
+            output.append({"bbox": [100,200,400,250], "class": "aldo", "score": 55})
+
             printData(output, (inference_time * 1000))
         except Exception as e:
             printError(str(e))
