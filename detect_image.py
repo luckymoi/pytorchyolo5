@@ -17,6 +17,7 @@
 import argparse
 import time
 import sys
+import os
 from PIL import Image
 from PIL import ImageDraw
 from io import BytesIO, StringIO
@@ -29,24 +30,33 @@ import platform
 from datetime import datetime
 
 
+def printInfo(text):
+    print(json.dumps({"type": "info", "data": text}))
+
+def printError(text):
+    print(json.dumps({"type": "error", "data": text}))
+
+def printData(array, time):
+    print(json.dumps({"type": "data", "data": array, "time": time}))
+
 def main():
 #    labels = load_labels("models/coco_labels.txt")
 #    interpreter = make_interpreter("models/ssd_mobilenet_v2_coco_quant_postprocess_edgetpu.tflite")
 #    interpreter.allocate_tensors()
     threshold = 0.4
-
+    printInfo("ready")
     while True:
         line = sys.stdin.readline().rstrip("\n")
         try:
             rawImage = BytesIO(base64.b64decode(line))
             image = Image.open(rawImage)
-            rep = os.path.abspath(__file__)
+#            rep = os.path.abspath(__file__)
+#            
+#            now = datetime.now()
+#            fn = rep + now.strftime("%H:%M:%S")
+#            print(fn)
             
-            now = datetime.now()
-            fn = rep + now.strftime("%H:%M:%S")
-            print(fn)
-            
-            image.save(fn, "JPEG")
+#            image.save(fn, "JPEG")
             
 #            scale = detect.set_input(interpreter, image.size,
 #                                     lambda size: image.resize(size, Image.ANTIALIAS))
@@ -55,6 +65,7 @@ def main():
 #            interpreter.invoke()
             inference_time = time.perf_counter() - start
 #            objs = detect.get_output(interpreter, threshold, scale)
+            objs = []
             output = []
             for obj in objs:
                 label = labels.get(obj.id, obj.id)

@@ -49,6 +49,7 @@ function respawn() {
         }
         var messages = rawString.split('\n')
         messages.forEach((message) => {
+            //console.log(message)
             if (message === "") return;
             var obj = JSON.parse(message)
             if (obj.type === "error") {
@@ -73,16 +74,19 @@ function respawn() {
  
  
 // Base Init />>
+//console.log("respawn")
 child = respawn();
  
 const emptyDataObject = { data: [], type: undefined, time: 0 };
  
 async function process(buffer, type) {
+    //console.log(ready)
     const startTime = new Date();
     if (!ready) {
         return emptyDataObject;
     }
     ready = false;
+    //console.log("process2")
     child.stdin.write(buffer.toString('base64') + '\n');
  
     var message = null;
