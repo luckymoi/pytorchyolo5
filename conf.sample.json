@@ -1,5 +1,5 @@
 {
-  "plug":"Pytorch",
+  "plug":"Pytorchyolo5",
   "host":"localhost",
   "port":8080,
   "hostPort":8082,

@@ -1,5 +1,5 @@
 //
-// Shinobi - Pytorch Plugin
+// Shinobi - Pytorch Yolo5 Plugin
 // Copyright (C) 2016-2025 Moe Alam, moeiscool
 // Copyright (C) 2020 Levent Koch, dermodmaster
 // Copyright (C) 2020 Samuel Buffet
@@ -135,7 +135,7 @@ s.detectObject = function (buffer, d, tx, frameLocation, callback) {
                 ke: d.ke,
                 details: {
                     plug: config.plug,
-                    name: 'Pytorch',
+                    name: 'Pytorchyolo5',
                     reason: 'object',
                     matrices: mats,
                     imgHeight: width,
