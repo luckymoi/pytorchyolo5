@@ -12,7 +12,8 @@ echo "Installing yolo5 dependencies..."
 sudo pip3 install -r yolo5requirements.txt
 
 echo "downloading yolo5 weights..."
-sudo bash weights/download_weights.sh
+sudo cd weights
+sudo bash download_weights.sh
 
 if [ ! -e "./conf.json" ]; then
     echo "Creating conf.json"
