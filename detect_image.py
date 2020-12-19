@@ -12,7 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Example using TF Lite to detect objects in a given image."""
+"""Example using Pytorch to detect objects in a given image."""
 
 import argparse
 import time
@@ -24,14 +24,9 @@ import time
 import base64
 import json
 import detect
-import tflite_runtime.interpreter as tflite
+#import tflite_runtime.interpreter as tflite
 import platform
 
-EDGETPU_SHARED_LIB = {
-    'Linux': 'libedgetpu.so.1',
-    'Darwin': 'libedgetpu.1.dylib',
-    'Windows': 'edgetpu.dll'
-}[platform.system()]
 
 def load_labels(path, encoding='utf-8'):
     """Loads labels from file (with or without index numbers).
@@ -54,14 +49,14 @@ def load_labels(path, encoding='utf-8'):
             return {index: line.strip() for index, line in enumerate(lines)}
 
 
-def make_interpreter(model_file):
-    model_file, *device = model_file.split('@')
-    return tflite.Interpreter(
-        model_path=model_file,
-        experimental_delegates=[
-            tflite.load_delegate(EDGETPU_SHARED_LIB,
-                                 {'device': device[0]} if device else {})
-        ])
+#def make_interpreter(model_file):
+#    model_file, *device = model_file.split('@')
+#    return tflite.Interpreter(
+#        model_path=model_file,
+#        experimental_delegates=[
+#            tflite.load_delegate(EDGETPU_SHARED_LIB,
+#                                 {'device': device[0]} if device else {})
+#        ])
 
 
 def draw_objects(draw, objs, labels):
@@ -86,8 +81,8 @@ def printData(array, time):
 
 def main():
     labels = load_labels("models/coco_labels.txt")
-    interpreter = make_interpreter("models/ssd_mobilenet_v2_coco_quant_postprocess_edgetpu.tflite")
-    interpreter.allocate_tensors()
+#    interpreter = make_interpreter("models/ssd_mobilenet_v2_coco_quant_postprocess_edgetpu.tflite")
+#    interpreter.allocate_tensors()
     threshold = 0.4
     printInfo("ready")
     while True:
@@ -95,13 +90,13 @@ def main():
         try:
             rawImage = BytesIO(base64.b64decode(line))
             image = Image.open(rawImage)
-            scale = detect.set_input(interpreter, image.size,
-                                     lambda size: image.resize(size, Image.ANTIALIAS))
+#            scale = detect.set_input(interpreter, image.size,
+#                                     lambda size: image.resize(size, Image.ANTIALIAS))
 
             start = time.perf_counter()
-            interpreter.invoke()
+#            interpreter.invoke()
             inference_time = time.perf_counter() - start
-            objs = detect.get_output(interpreter, threshold, scale)
+#            objs = detect.get_output(interpreter, threshold, scale)
             output = []
             for obj in objs:
                 label = labels.get(obj.id, obj.id)
