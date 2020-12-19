@@ -99,65 +99,65 @@ class BBox(collections.namedtuple('BBox', ['xmin', 'ymin', 'xmax', 'ymax'])):
     return area / (a.area + b.area - area)
 
 
-def input_size(interpreter):
-  """Returns input image size as (width, height) tuple."""
-  _, height, width, _ = interpreter.get_input_details()[0]['shape']
-  return width, height
+#def input_size(interpreter):
+#  """Returns input image size as (width, height) tuple."""
+#  _, height, width, _ = interpreter.get_input_details()[0]['shape']
+#  return width, height
 
 
-def input_tensor(interpreter):
-  """Returns input tensor view as numpy array of shape (height, width, 3)."""
-  tensor_index = interpreter.get_input_details()[0]['index']
-  return interpreter.tensor(tensor_index)()[0]
+#def input_tensor(interpreter):
+#  """Returns input tensor view as numpy array of shape (height, width, 3)."""
+#  tensor_index = interpreter.get_input_details()[0]['index']
+#  return interpreter.tensor(tensor_index)()[0]
 
 
-def set_input(interpreter, size, resize):
-  """Copies a resized and properly zero-padded image to the input tensor.
-
-  Args:
-    interpreter: Interpreter object.
-    size: original image size as (width, height) tuple.
-    resize: a function that takes a (width, height) tuple, and returns an RGB
-      image resized to those dimensions.
-  Returns:
-    Actual resize ratio, which should be passed to `get_output` function.
-  """
-  width, height = input_size(interpreter)
-  w, h = size
-  scale = min(width / w, height / h)
-  w, h = int(w * scale), int(h * scale)
-  tensor = input_tensor(interpreter)
-  tensor.fill(0)  # padding
-  _, _, channel = tensor.shape
-  tensor[:h, :w] = np.reshape(resize((w, h)), (h, w, channel))
-  return scale, scale
-
-
-def output_tensor(interpreter, i):
-  """Returns output tensor view."""
-  tensor = interpreter.tensor(interpreter.get_output_details()[i]['index'])()
-  return np.squeeze(tensor)
+#def set_input(interpreter, size, resize):
+#  """Copies a resized and properly zero-padded image to the input tensor.
+#
+#  Args:
+#    interpreter: Interpreter object.
+#    size: original image size as (width, height) tuple.
+#    resize: a function that takes a (width, height) tuple, and returns an RGB
+#      image resized to those dimensions.
+#  Returns:
+#    Actual resize ratio, which should be passed to `get_output` function.
+#  """
+#  width, height = input_size(interpreter)
+#  w, h = size
+#  scale = min(width / w, height / h)
+#  w, h = int(w * scale), int(h * scale)
+#  tensor = input_tensor(interpreter)
+#  tensor.fill(0)  # padding
+#  _, _, channel = tensor.shape
+#  tensor[:h, :w] = np.reshape(resize((w, h)), (h, w, channel))
+#  return scale, scale
 
 
-def get_output(interpreter, score_threshold, image_scale=(1.0, 1.0)):
-  """Returns list of detected objects."""
-  boxes = output_tensor(interpreter, 0)
-  class_ids = output_tensor(interpreter, 1)
-  scores = output_tensor(interpreter, 2)
-  count = int(output_tensor(interpreter, 3))
+#def output_tensor(interpreter, i):
+#  """Returns output tensor view."""
+#  tensor = interpreter.tensor(interpreter.get_output_details()[i]['index'])()
+#  return np.squeeze(tensor)
 
-  width, height = input_size(interpreter)
-  image_scale_x, image_scale_y = image_scale
-  sx, sy = width / image_scale_x, height / image_scale_y
 
-  def make(i):
-    ymin, xmin, ymax, xmax = boxes[i]
-    return Object(
-        id=int(class_ids[i]),
-        score=float(scores[i]),
-        bbox=BBox(xmin=xmin,
-                  ymin=ymin,
-                  xmax=xmax,
-                  ymax=ymax).scale(sx, sy).map(int))
+#def get_output(interpreter, score_threshold, image_scale=(1.0, 1.0)):
+#  """Returns list of detected objects."""
+#  boxes = output_tensor(interpreter, 0)
+#  class_ids = output_tensor(interpreter, 1)
+#  scores = output_tensor(interpreter, 2)
+#  count = int(output_tensor(interpreter, 3))
 
-  return [make(i) for i in range(count) if scores[i] >= score_threshold]
+#  width, height = input_size(interpreter)
+#  image_scale_x, image_scale_y = image_scale
+#  sx, sy = width / image_scale_x, height / image_scale_y
+
+#  def make(i):
+#    ymin, xmin, ymax, xmax = boxes[i]
+#    return Object(
+#        id=int(class_ids[i]),
+#        score=float(scores[i]),
+#        bbox=BBox(xmin=xmin,
+#                  ymin=ymin,
+#                  xmax=xmax,
+#                  ymax=ymax).scale(sx, sy).map(int))
+#
+#  return [make(i) for i in range(count) if scores[i] >= score_threshold]
