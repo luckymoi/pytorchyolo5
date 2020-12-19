@@ -1,7 +1,8 @@
 //
-// Shinobi - Tensorflow Plugin
+// Shinobi - Pytorch Plugin
 // Copyright (C) 2016-2025 Moe Alam, moeiscool
 // Copyright (C) 2020 Levent Koch, dermodmaster
+// Copyright (C) 2020 Samuel Buffet
 //
 // # Donate
 //
