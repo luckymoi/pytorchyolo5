@@ -1,15 +1,16 @@
-# TensorFlow-python.js
+# shinobi-pytorch.js
 
 **Ubuntu and CentOS only**
 
 Go to the Shinobi directory. **/home/Shinobi** is the default directory.
 
 ```
-cd /home/Shinobi/plugins/tensorflow-python
+cd /home/Shinobi/plugins/pytorch
 ```
 
-Install TensorFlows python version first:
-https://www.tensorflow.org/lite/guide/python
+Install pytorch first:
+https://pytorch.org/get-started/locally/
+
 Make sure that you are downloading the correct file for your system architecture and python version.
 
 Install other python dependencies
@@ -27,7 +28,7 @@ sh INSTALL.sh
 Start the plugin.
 
 ```
-pm2 start shinobi-tensorflow-python.js
+pm2 start shinobi-pytorch.js
 ```
 
 Doing this will reveal options in the monitor configuration. Shinobi does not need to be restarted when a plugin is initiated or stopped.
@@ -49,9 +50,9 @@ Here is a sample of a Host configuration for the plugin.
 
 ```
 {
-  "plug":"Tensorflow",
+  "plug":"Pytorch",
   "hostPort":8082,
-  "key":"Tensorflow123123",
+  "key":"Pytorch23123",
   "mode":"host",
   "type":"detector"
 }
@@ -68,11 +69,11 @@ Add the `plugins` array if you don't already have it. Add the following *object 
 ```
   "plugins":[
       {
-          "id" : "Tensorflow",
+          "id" : "Pytorch",
           "https" : false,
           "host" : "localhost",
           "port" : 8082,
-          "key" : "Tensorflow123123",
+          "key" : "Pytorch23123",
           "mode" : "host",
           "type" : "detector"
       }
