@@ -1,9 +1,9 @@
 {
-  "name": "shinobi-tensorflow-python",
+  "name": "shinobi-pytorch",
   "author": "Shinob Systems, Moinul Alam | dermodmaster, Levent Koch |  Samuel Buffet",
   "version": "1.0.0",
-  "description": "Object Detection plugin based on tensorflow Lite",
-  "main": "shinobi-tensorflow-python.js",
+  "description": "Object Detection plugin based on pytorch",
+  "main": "shinobi-pytorch.js",
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.16.2",
@@ -12,7 +12,7 @@
     "socket.io-client": "^1.7.4"
   },
   "devDependencies": {},
-  "bin": "shinobi-tensorflow-python.js",
+  "bin": "shinobi-pytorch.js",
   "scripts": {
     "package": "pkg package.json -t linux,macos,win --out-path dist",
     "package-x64": "pkg package.json -t linux-x64,macos-x64,win-x64 --out-path dist/x64",
