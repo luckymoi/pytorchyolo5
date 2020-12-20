@@ -75,16 +75,11 @@ def detect(imgsz, model, names, colors, device):
             rawImage = BytesIO(base64.b64decode(line))
             image = Image.open(rawImage)
                        
-#            now = datetime.now()
-#            fn = rep + now.strftime("%H:%M:%S")
-#            printInfo(fn)
-#            
             image.save(fn, "JPEG")
             
             dataset = LoadImages(fn, img_size=imgsz)
             
             start = time.perf_counter()
-#            interpreter.invoke()
 
             img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
 #            _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
