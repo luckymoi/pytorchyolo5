@@ -48,6 +48,7 @@ from utils.datasets import LoadStreams, LoadImages
 from utils.general import check_img_size, non_max_suppression, apply_classifier, scale_coords, xyxy2xywh, strip_optimizer, set_logging, increment_path
 from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized
+from torchvision import transforms
 
 
 
@@ -92,7 +93,10 @@ def detect(imgsz, model, names, colors, device, half):
             _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
             
             for path, img, im0s, vid_cap in dataset:
+#                imgg = transforms.ToTensor()(image).to(device)
                 img = torch.from_numpy(img).to(device)
+#                printInfo(imgg)
+#                printInfo(repr(img))
                 img = img.half() if half else img.float()  # uint8 to fp16/32
                 img /= 255.0  # 0 - 255 to 0.0 - 1.0
                 if img.ndimension() == 3:
