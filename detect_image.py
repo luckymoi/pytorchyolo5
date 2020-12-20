@@ -117,15 +117,13 @@ def detect(imgsz, model, names, colors, device, half):
                         for *xyxy, conf, cls in reversed(det):
                             labelID = names[int(cls)]
                             score = float(conf)
-                            bbox = [10,20,100,150]
-                            output.append({"bbox": [10,20,100,150], "class": labelID, "score": score})
+#                            xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
+                            bbox = [int(xyxy[0]),int(xyxy[1]),int(xyxy[2])-int(xyxy[0]),int(xyxy[3])-int(xyxy[1])]
+                            output.append({"bbox": bbox, "class": labelID, "score": score})
           
                 
             inference_time = time.perf_counter() - start
                    
-            output.append({"bbox": [100,200,100,150], "class": "essai", "score": 80})
-#            output.append({"bbox": [100,200,400,250], "class": "aldo", "score": 55})
-
             printData(output, (inference_time * 1000))
             
         except Exception as e:
