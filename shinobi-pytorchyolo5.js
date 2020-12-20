@@ -49,7 +49,7 @@ function respawn() {
         }
         var messages = rawString.split('\n')
         messages.forEach((message) => {
-            //console.log(message)
+            
             if (message === "") return;
             var obj = JSON.parse(message)
             if (obj.type === "error") {
