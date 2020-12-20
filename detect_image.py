@@ -62,7 +62,7 @@ def printData(array, time):
     print(json.dumps({"type": "data", "data": array, "time": time}))
 
 
-def detect(imgsz, model, names, colors):
+def detect(imgsz, model, names, colors, device):
     threshold = 0.4
     printInfo("ready")
     
@@ -86,7 +86,7 @@ def detect(imgsz, model, names, colors):
             start = time.perf_counter()
 #            interpreter.invoke()
 
-#            img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
+            img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
 #            _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
             
             inference_time = time.perf_counter() - start
@@ -221,4 +221,4 @@ if __name__ == '__main__':
         names = model.module.names if hasattr(model, 'module') else model.names
         colors = [[random.randint(0, 255) for _ in range(3)] for _ in names]
                 
-        detect(imgsz, model, names, colors)
+        detect(imgsz, model, names, colors, device)
