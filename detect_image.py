@@ -62,27 +62,27 @@ def printData(array, time):
     print(json.dumps({"type": "data", "data": array, "time": time}))
 
 
-def detect(model, names, colors):
+def detect(imgsz, model, names, colors):
     threshold = 0.4
     printInfo("ready")
-       
+    
+    rep = os.path.abspath(__file__)
+    fn = rep + '.jpg'
+    
     while True:
         line = sys.stdin.readline().rstrip("\n")
         try:
             rawImage = BytesIO(base64.b64decode(line))
-#            image = Image.open(rawImage)
-            dataset = Image.open(rawImage)
-#            rep = os.path.abspath(__file__)
-#            
+            image = Image.open(rawImage)
+                       
 #            now = datetime.now()
 #            fn = rep + now.strftime("%H:%M:%S")
-#            print(fn)
+#            printInfo(fn)
 #            
-#            image.save(fn, "JPEG")
+            image.save(fn, "JPEG")
             
-#            scale = detect.set_input(interpreter, image.size,
-#                                     lambda size: image.resize(size, Image.ANTIALIAS))
-
+            dataset = LoadImages(fn, img_size=imgsz)
+            
             start = time.perf_counter()
 #            interpreter.invoke()
 
@@ -220,6 +220,5 @@ if __name__ == '__main__':
         # Get names and colors
         names = model.module.names if hasattr(model, 'module') else model.names
         colors = [[random.randint(0, 255) for _ in range(3)] for _ in names]
-        
-        
-        detect(model, names, colors)
+                
+        detect(imgsz, model, names, colors)
