@@ -50,25 +50,20 @@ function respawn() {
         messages.forEach((message) => {
             
             if (message === "") return;
-            try {
-                var obj = JSON.parse(message)
-                if (obj.type === "error") {
-                    console.log("Script got error: " + message.data, new Date());
-                    throw message.data;
-                }
-     
-                if (obj.type === "info" && obj.data === "ready") {
-                    console.log("set ready true")
-                    ready = true;
-                } else {
-                    if (obj.type !== "data" && obj.type !== "info") {
-                        throw "Unexpected message: " + rawString;
-                    }
-                }
-            } catch (err) {
-               console.log("non standard message: " + message)
+            var obj = JSON.parse(message)
+            if (obj.type === "error") {
+                console.log("Script got error: " + message.data, new Date());
+                throw message.data;
             }
-            
+ 
+            if (obj.type === "info" && obj.data === "ready") {
+                console.log("set ready true")
+                ready = true;
+            } else {
+                if (obj.type !== "data" && obj.type !== "info") {
+                    throw "Unexpected message: " + rawString;
+                }
+            }
         })
     })
     return theChild
